@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 0;
+}
+
+.subtitle {
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.divider {
+    height: 8px;
+    background-color: #235a9f;
+    margin: 20px 0;
+}
+
+.instruction {
+    font-size: 26px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.oval-btn {
+    padding: 20px 60px;
+    border-radius: 60px;
+    border: 2px solid #235a9f;
+    background-color: white;
+    font-size: 32px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.oval-btn:hover {
+    background-color: #e9f0ff;
+}
+
+/* Hidden box until button is clicked */
+.info-box {
+    width: 50%;
+    margin: 20px auto;
+    padding: 40px;
+    border-radius: 40px;
+    border: 2px solid #235a9f;
+    font-size: 24px;
+    line-height: 1.6;
+
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+/* Class used to show it with fade-in */
+.show {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
