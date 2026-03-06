@@ -20,9 +20,32 @@
         Elije el problema que tienes para ofrecerte una ruta de solución:
     </p>
 
-    <input type="text" id="userInput" placeholder="Escribe tu problema aquí">
+    <!-- <input type="text" id="userInput" placeholder="Escribe tu problema aquí">
     <button id="submitButton">Enviar</button>
-    <div id="link"></div>
+    <div id="link"></div> -->
+
+    <div class="container">
+        <h2>Consulta:</h2>
+        
+        <!-- <p>Enter your text below. It will be sent to a Cloud Run service for processing, and the output will be displayed here.</p> -->
+
+        <textarea id="userInput" rows="3" cols="100" placeholder="Escribe tu problema aquí"></textarea>
+        <br>
+        <button id="submitButton">Enviar</button>
+
+        <div id="statusMessage" class="message"></div>
+        
+        <div class="output-section">
+            <h2>Respuesta:</h2>
+            <pre id="outputDisplay"></pre> <!-- <pre> preserves whitespace and line breaks -->
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+
+
 
     <div class="button-container">
         <button id="btnProblema" class="oval-btn">Soy un vecino afectado por un antro irregular sin uso de suelo aprobado</button>
