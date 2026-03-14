@@ -26,9 +26,9 @@ function updateOutputDisplay(data) {
     statusMessage.textContent = '';
 
     if (data && data.processed_output) {
-        // Assuming Cloud Run returns an object with a 'processed_output' field
-        outputDisplay.textContent = JSON.stringify(data.processed_output, null, 2); // Prettify JSON output
-        // If your output is simple text, just use: outputDisplay.textContent = data.processed_output;
+        // Format the plain text output nicely as HTML
+        const formattedText = data.processed_output.replace(/\n/g, '<br>');
+        outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">${formattedText}</div>`;
     } else {
         outputDisplay.textContent = 'No processed output received.';
     }
@@ -67,7 +67,7 @@ async function sendTextToCloudRun(inputText) {
 
         const result = await response.json(); // Parse the JSON response from Cloud Run
         updateOutputDisplay(result); // Update the HTML with the result
-        showStatus('Processing complete!', 'success');
+        showStatus('Consulta completada con éxito', 'success');
         return result;
 
     } catch (error) {

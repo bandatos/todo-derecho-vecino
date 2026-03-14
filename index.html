@@ -56,111 +56,175 @@
             h1, h2, h3, h4 {margin-top: 1.5em;}
             .emoji {font-size: 1.2em; vertical-align: middle;}
             .warning {color: #b71c1c; font-weight: bold;}
+
+            .diagram-wrapper {
+                max-width: 1000px;
+                width: 100%;
+                background: white;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            }
+            /* h2 {
+                text-align: center;
+                color: #1565c0;
+                margin-bottom: 25px;
+            } */
+            svg {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+            /* Estilos de nodos */
+            .node-rect {
+                fill: #e3f2fd;
+                stroke: #1976d2;
+                stroke-width: 2;
+                rx: 8;
+                ry: 8;
+            }
+            .node-text {
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+                font-size: 14px;
+                fill: #0d47a1;
+                font-weight: 600;
+                text-anchor: middle;
+                dominant-baseline: middle;
+            }
+            /* Estilos de conexiones */
+            .connection {
+                stroke: #64b5f6;
+                stroke-width: 2;
+                fill: none;
+            }
+            .arrow-head {
+                fill: #64b5f6;
+            }
+            /* Etiquetas de decisión */
+            .decision-label {
+                font-size: 11px;
+                fill: #42a5f5;
+                font-weight: 500;
+            }
+
         </style>
     </head>
     <body>
-        <h1><strong>1. Define el conflicto (Análisis inicial)</strong></h1>
 
-    <h3>Acciones:</h3>
-    <ol>
-        <li><strong>Identificar el hecho generador del conflicto:</strong>– Funcionamiento de un establecimiento irregular (“antro”) sin autorización. – Afectaciones: ruido, riesgos, seguridad, movilidad, violencia, etc.</li>
-        <li><strong>Determinar la consecuencia jurídica relevante:</strong>– Violación a normas administrativas de uso de suelo.  – Posible omisión de la autoridad. </li>
-        <li><strong>Redactar una “teoría preliminar del caso”:</strong>– Qué ocurre. – Por qué es ilegal. – A quién afecta. – Qué quieres lograr: clausura, verificación, sanción, suspensión de actividades.</li>
-    </ol>
+                <!-- Diagrama SVG Embebido (HTML Exclusivo) -->
+        <svg viewBox="0 0 900 750" xmlns="http://www.w3.org/2000/svg">
+            
+            <!-- Definiciones de flechas -->
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" class="arrow-head"/>
+                </marker>
+            </defs>
 
-    <h1><strong>2. Recolecta pruebas</strong></h1>
+            <!-- NIVEL 1: Inicio -->
+            <rect x="300" y="20" width="300" height="50" class="node-rect"/>
+            <text x="450" y="45" class="node-text">1. Define el Conflicto</text>
 
-    <h3>Reúne:</h3>
-    <ol>
-        <li><strong>Prueba documental:</strong>– Fotografías del local operando. – Videos mostrando horarios, ruido, aglomeraciones. – Copia del certificado de uso de suelo de tu edificio (para mostrar contraste). – Búsqueda del uso de suelo permitido para el predio del antro. </li>
-        <li><strong>Prueba testimonial:</strong>– Declaraciones de vecinos afectados. – Recopilación de incidentes específicos: fechas, horas, afectaciones.</li>
-        <li><strong>Pruebas periciales posibles:</strong>– Medición de ruido con app calibrada o perito en acústica. – Informe técnico sobre impacto vecinal.</li>
-        <li><strong>Bitácora diaria de afectaciones:</strong>– Fecha – Hora – Descripción del hecho – Evidencia asociada</li>
-    </ol>
+            <!-- Conexión 1 -->
+            <line x1="450" y1="70" x2="450" y2="110" class="connection" marker-end="url(#arrow)"/>
 
-    <h1><strong>3. Identificar vías de acción paralelas</strong></h1>
+            <!-- NIVEL 2: Pruebas -->
+            <rect x="300" y="110" width="300" height="50" class="node-rect"/>
+            <text x="450" y="135" class="node-text">2. Recolecta Pruebas</text>
 
-    <p>Se trabaja por dos caminos simultáneos:</p>
+            <!-- Conexión 2 -->
+            <line x1="450" y1="160" x2="450" y2="200" class="connection" marker-end="url(#arrow)"/>
 
-    <h2>A. Vía administrativa (rápida, práctica y de bajo costo)</h2>
+            <!-- NIVEL 3: Decisión Vías de Acción -->
+            <rect x="300" y="200" width="300" height="50" class="node-rect"/>
+            <text x="450" y="225" class="node-text">3. Identifica Vías de Acción</text>
 
-    <h3>1. Denuncia ante la alcaldía o municipio</h3>
-    <p>Se solicita:</p>
-    <ul>
-        <li>Verificación de uso de suelo</li>
-        <li>Inspección de protección civil</li>
-        <li>Revisión de licencia de funcionamiento</li>
-        <li>Clausura temporal o definitiva</li>
-    </ul>
-    <h3>Documentos necesarios:</h3>
-    <ul>
-        <li>Identificación</li>
-        <li>Relato de hechos (ya preparado en tu teoría del caso)</li>
-        <li>Evidencias</li>
-        <li>Firmas de más vecinos (si es posible)</li>
-    </ul>
+            <!-- Ramas de decisión -->
+            <line x1="300" y1="225" x2="150" y2="225" class="connection"/>
+            <line x1="150" y1="225" x2="150" y2="280" class="connection" marker-end="url(#arrow)"/>
+            <line x1="600" y1="225" x2="750" y2="225" class="connection"/>
+            <line x1="750" y1="225" x2="750" y2="280" class="connection" marker-end="url(#arrow)"/>
 
-    <h2>B. Vía civil/penal si existe afectación grave</h2>
+            <!-- Rama Izquierda: Administrativa -->
+            <rect x="50" y="280" width="200" height="50" class="node-rect"/>
+            <text x="150" y="305" class="node-text">A. Administrativa</text>
 
-    <h3>En materia civil:</h3>
-    <ul>
-        <li>Demanda por afectaciones a la propiedad y perturbación del derecho de uso y disfrute.</li>
-        <li>Solicitud de <strong>medidas cautelares</strong> para suspender actividades molestas.</li>
-    </ul>
-    <h3>En materia penal (solo si aplica):</h3>
-    <ul>
-        <li>Denuncia por ruido extremo o actividades peligrosas (según leyes locales).</li>
-    </ul>
+            <!-- Rama Derecha: Civil/Penal -->
+            <rect x="650" y="280" width="200" height="50" class="node-rect"/>
+            <text x="750" y="305" class="node-text">B. Civil/Penal</text>
 
-    <h1><strong>4. Construcción de la estrategia procesal (núcleo metodológico de litigación)</strong></h1>
-    <p>Aquí se refina la <strong>teoría final del caso</strong>:</p>
-    <ol>
-        <li><strong>Hechos no controvertidos:</strong>– El local opera. – Es contiguo a tu edificio.</li>
-        <li><strong>Hechos controvertidos:</strong>– Si tiene o no tiene uso de suelo. – Nivel real de afectación.</li>
-        <li><strong>Puntos de derecho relevantes:</strong>– Facultades de verificación de la autoridad. – Derecho a la tranquilidad del hogar. </li>
-        <li><strong>Narrativa persuasiva:</strong>– Mostrar que el problema es continuo y documentado. – Exhibir que afectó a varios vecinos, no solo a uno. – Demostrar que la autoridad debe intervenir.</li>
-    </ol>
+            <!-- Conexiones hacia Estrategia -->
+            <line x1="150" y1="330" x2="150" y2="380" class="connection"/>
+            <line x1="150" y1="380" x2="450" y2="380" class="connection"/>
+            <line x1="750" y1="330" x2="750" y2="380" class="connection"/>
+            <line x1="750" y1="380" x2="450" y2="380" class="connection"/>
 
-    <h1><strong>5. Ejecución de acciones frente a la autoridad</strong></h1>
-    <ol>
-        <li>Presentar denuncias administrativas → Entregas tu expediente completo ya ordenado.</li>
-        <li>Aportar pruebas desde el inicio → Esto acelera la verificación.</li>
-        <li>Solicitar por escrito copia del folio → Permite dar seguimiento.</li>
-        <li>Dar seguimiento continuo → Visitas presenciales a la oficina correspondiente. → Peticiones de "pronta respuesta".</li>
-    </ol>
+            <!-- Etiquetas de decisión -->
+            <text x="100" y="270" class="decision-label">Administrativa</text>
+            <text x="700" y="270" class="decision-label">Civil/Penal</text>
 
-    <h1><strong>6. Preparar caso judicial si la autoridad no actúa</strong></h1>
+            <!-- NIVEL 4: Estrategia -->
+            <rect x="300" y="380" width="300" height="50" class="node-rect"/>
+            <text x="450" y="405" class="node-text">4. Estrategia Procesal</text>
 
-    <h3>Posible siguiente paso:</h3>
-    <ul>
-        <li><strong>Juicio de amparo por omisión de la autoridad</strong> (si no atienden tus denuncias administrativas). </li>
-    </ul>
-    <h3>Elementos necesarios:</h3>
-    <ul>
-        <li>Copias selladas de tus denuncias.</li>
-        <li>Evidencias de la afectación.</li>
-        <li>Mapa del predio y uso de suelo oficial.</li>
-        <li>Fechas de no actuación de la autoridad.</li>
-    </ul>
+            <!-- Conexión 4 -->
+            <line x1="450" y1="430" x2="450" y2="470" class="connection" marker-end="url(#arrow)"/>
 
-    <h1><strong>7. Negociación y medidas comunitarias en paralelo</strong></h1>
+            <!-- NIVEL 5: Ejecución -->
+            <rect x="300" y="470" width="300" height="50" class="node-rect"/>
+            <text x="450" y="495" class="node-text">5. Ejecución ante Autoridad</text>
 
-    <ol>
-        <li>Recolectar firmas de vecinos.</li>
-        <li>Enviar carta conjunta a la alcaldía/municipio.</li>
-        <li>Pedir reunión con la jefatura de unidad de verificación.</li>
-        <li>Pedir intervención de policía preventiva en horarios clandestinos. </li>
-    </ol>
+            <!-- Conexión 5 -->
+            <line x1="450" y1="520" x2="450" y2="560" class="connection" marker-end="url(#arrow)"/>
 
-    <h1><strong>8. Revisión periódica y ajuste de la estrategia</strong></h1>
+            <!-- NIVEL 6: Decisión Autoridad -->
+            <rect x="300" y="560" width="300" height="50" class="node-rect"/>
+            <text x="450" y="585" class="node-text">6. Siguientes Pasos</text>
+            
+        </svg>
 
-    <ul>
-        <li>Evaluar qué autoridad respondió y cuál no.</li>
-        <li>Ajustar las pruebas faltantes.</li>
-        <li>Preparar el expediente por si hay que judicializar.</li>
-    </ul>
+            <h2>1. Define el conflicto</h2>
+            <ol>
+                <li><strong>Identifica el hecho:</strong> ubica el funcionamiento irregular, ruidos o riesgos de seguridad.</li>
+                <li><strong>Determina la consecuencia:</strong> enfócate en la violación de uso de suelo u omisiones de la autoridad.</li>
+                <li><strong>Redacta tu teoría:</strong> explica qué ocurre, por qué es ilegal y si buscas la clausura o sanción.</li>
+            </ol>
 
-        </div>
+            <h2>2. Recolecta pruebas</h2>
+            <ul>
+                <li><strong>Documentos:</strong> toma fotos, videos de horarios y busca el uso de suelo permitido del predio.</li>
+                <li><strong>Testimonios:</strong> reúne declaraciones de otros afectados y registra incidentes específicos.</li>
+                <li><strong>Peritajes:</strong> mide el ruido con apps o solicita informes de impacto vecinal.</li>
+                <li><strong>Bitácora:</strong> anota diariamente fecha, hora y evidencia del hecho.</li>
+            </ul>
+
+            <h2>3. Identifica vías de acción</h2>
+            <ul>
+                <li><strong>Vía administrativa:</strong> denuncia ante la alcaldía para solicitar inspecciones de protección civil, uso de suelo y clausuras. Prepara tu identificación, relato de hechos y firmas de vecinos.</li>
+                <li><strong>Vía civil o penal:</strong> demanda por perturbación de tu derecho al disfrute de la propiedad o denuncia penal por actividades peligrosas si el riesgo es grave.</li>
+            </ul>
+
+            <h2>4. Construye tu estrategia</h2>
+            <ol>
+                <li><strong>Hechos:</strong> separa lo que no tiene discusión (operación del local) de lo controvertido (licencias reales).</li>
+                <li><strong>Derecho:</strong> fundamenta tu defensa en la tranquilidad del hogar y las facultades de la autoridad.</li>
+                <li><strong>Narrativa:</strong> muestra que la afectación es continua, documentada y colectiva.</li>
+            </ol>
+
+            <h2>5. Ejecuta ante la autoridad</h2>
+            <ul>
+                <li><strong>Presenta</strong> tu expediente completo y aporta pruebas desde el inicio para acelerar el proceso.</li>
+                <li><strong>Solicita</strong> tu folio por escrito y realiza visitas presenciales para dar seguimiento continuo.</li>
+            </ul>
+
+            <h2>6. Siguientes pasos</h2>
+            <ul>
+                <li>Si la autoridad no actúa, recurre al <strong>juicio de amparo por omisión</strong>. Necesitarás tus acuses sellados, evidencias de afectación y mapas oficiales.</li>
+                <li>Recolecta firmas, envía cartas conjuntas y solicita reuniones con jefes de verificación o policía preventiva.</li>
+                <li>Evalúa qué autoridades respondieron, completa pruebas faltantes y mantén el expediente listo para judicializar.</li>
+            </ul>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
