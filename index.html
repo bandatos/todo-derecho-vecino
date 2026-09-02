@@ -17,7 +17,7 @@
     <div class="divider"></div>
 
     <p class="instruction">
-        Elije el problema que tienes para ofrecerte una ruta de solución:
+        Escribe el problema que tienes, y dale clic al botón "Enviar" cuando termines para ofrecerte una ruta de solución:
     </p>
 
     <!-- <input type="text" id="userInput" placeholder="Escribe tu problema aquí">
@@ -25,7 +25,7 @@
     <div id="link"></div> -->
 
     <div class="container">
-        <h2>Consulta:</h2>
+        <!-- <h2>Consulta:</h2> -->
         
         <!-- <p>Enter your text below. It will be sent to a Cloud Run service for processing, and the output will be displayed here.</p> -->
 
@@ -44,10 +44,23 @@
     </div>
 
     <div class="button-container">
-        <button id="btnProblema" class="oval-btn">Soy un vecino afectado por un antro irregular sin uso de suelo aprobado</button>
+        <button id="btnProblema" class="oval-btn info-toggle" data-info-box="infoBox1" aria-controls="infoBox1" aria-expanded="false">Soy un vecino afectado por un antro irregular sin uso de suelo aprobado</button>
     </div>
 
-    <div id="infoBox" class="info-box hidden">
+    <div class="button-container">
+        <button id="btnProblemaNuevo" class="oval-btn info-toggle" data-info-box="infoBox2" aria-controls="infoBox2" aria-expanded="false">Pasos para denunciar en la PAOT</button>
+    </div>
+
+    <div class="button-container">
+        <button id="btnProblemaNuevo" class="oval-btn info-toggle" data-info-box="infoBox3" aria-controls="infoBox3" aria-expanded="false">Pasos para denunciar con un SUAC</button>
+    </div>
+
+    <div class="button-container">
+        <button id="btnProblemaNuevo" class="oval-btn info-toggle" data-info-box="infoBox4" aria-controls="infoBox4" aria-expanded="false">Otras denuncias</button>
+    </div>
+
+
+    <div id="infoBox1" class="info-box hidden">
     <head>
         <meta charset="UTF-8">
         <title>Plan jurídico para un vecino afectado</title>
@@ -112,7 +125,7 @@
     <body>
 
                 <!-- Diagrama SVG Embebido (HTML Exclusivo) -->
-        <svg viewBox="0 0 900 750" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
             
             <!-- Definiciones de flechas -->
             <defs>
@@ -226,7 +239,84 @@
 
     </div>
 
+
+    <div id="infoBox2" class="info-box hidden">
+        Para iniciar tu denuncia ante la Procuraduría Ambiental y del Ordenamiento Territorial (PAOT), puedes visitar el siguiente enlace:
+        <br>
+        <a href="https://paot.org.mx/denunciantes/inicia-tu-denuncia.php" target="_blank">https://paot.org.mx/denunciantes/inicia-tu-denuncia.php</a>
+        <br>
+        Al llenar la denuncia te pide los datos enlistados abajo. Los datos marcados con un asterisco * rojo en la página son obligatorios:
+        <ul>
+            <li>Tema de la denuncia</li>
+            <li>Datos de contacto</li>
+            <li>Domicilio</li>
+            <li>Descripción del problema. <b>Aquí puedes poner la misma descripción que pusiste arriba, junto con el fundamento legal que te compartimos.</b></li>
+            <li>Dirección de los hechos</li>
+        </ul>
+
+        <img src="images/photo_4918166754756857279_y.jpg" height="600" />
+        <br>
+        Después de llenar los datos y dar click en enviar al final de la página:
+        <ul>
+            <li>Te dará la opción de poner los datos como confidencales.</li>
+            <li>Te mostrará el botón de enviar.</li>
+            <li>Te mostrará el aviso de privacidad simplificado.</li>
+        </ul>
+        <!-- <img src="images/photo_4918166754756857278_y.jpg" height="600" /> -->
+        <img src="images/photo_4918166754756857277_y.jpg" height="600" />
+        <br>
+        Después de dar click en enviar, recibirás un correo de confirmación con tu número de folio. <b>Guarda este correo y el número de folio, ya que te servirá para dar seguimiento a tu denuncia.</b>
+        <img src="images/photo_4918166754756857276_y.jpg" height="600" />
+    </div>
+
+
+    <div id="infoBox3" class="info-box hidden">
+        Para iniciar tu denuncia ante la Sistema Unificado de Atención Ciudadana (SUAC), puedes visitar el siguiente enlace:
+        <br>
+        <a href="https://311locatel.cdmx.gob.mx/" target="_blank">https://311locatel.cdmx.gob.mx/</a>
+        <br>
+        Desde aquí puedes iniciar tu denincia o consultar otra denuncia que ya hayas enviado. Para iniciar una denuncia, debes dar click en el botón de "Iniciar reporte SUAC":
+        <br>
+        <img src="images/photo_4918166754756857275_y.jpg" height="600" />
+        <br>
+        Aquí debes iniciar sesión con tu correo y constraseña. Si no tienes cuenta, puedes crear una dando click en "Crear cuenta". Si tienes más dudas para crear tu cuenta...
+        <br>
+        <!-- <img src="images/photo_4918166754756857278_y.jpg" height="600" /> -->
+        <img src="images/photo_4918166754756857274_y.jpg" height="600" />
+        <br>
+        Después de ingresar tu correo y contraseña, te pedirá que escojas entre un correo o mensaje de texto celular. Allí te mandará un código de seguridad para terminar de iniciar sesión.</b>
+        <br>
+        <img src="images/photo_4918166754756857273_y.jpg" height="600" />
+        <br>
+        Ahora si, ya puedes meter la denuncia. Te piden la dirección de los hechos:
+        <br>
+        <img src="images/photo_4918166754756857272_x.jpg" height="600" />
+        <br>
+        Después, te pide una descripción del problema. <b>Aquí puedes poner la misma descripción que pusiste arriba, junto con el fundamento legal que te compartimos.</b>
+        <br>
+        <img src="images/photo_4918166754756857271_y.jpg" height="600" />
+        <br>
+        Luego, te pide referencias adicionales sobre la dirección de los hechos. Estos son opcionales. 
+        <br>
+        También te permite subir evidencia en fotos o documentos pdf. Esto es opcional, pero recomendado.
+        <br>
+        Por último, te da la opción de compartir los datos con las autoridades. Esto es necesario para darle seguimiento y asegurar que la denuncia avance.
+        <br>
+        Una vez completados los datos, le debes dar click en Enviar reporte en la esquina derecha al final de la página.
+        <br>
+        <img src="images/photo_4918166754756857270_x.jpg" height="600" />
+        <br>
+        Una vez que le diste click, te confirma que la solicitud fue registrada con un folio. <b> Guarda este folio para darle seguimiento a tu denuncia.</b>   
+        <br>
+        <img src="images/photo_4918166754756857269_x.jpg" height="600" />
+    </div>
+
+
+    <div id="infoBox4" class="info-box hidden">
+        En constucción.
+    </div>
+
+
     <script src="script.js"></script>
 </body>
 </html>
-

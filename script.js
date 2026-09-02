@@ -1,12 +1,37 @@
-document.getElementById("btnProblema").addEventListener("click", () => {
-    const box = document.getElementById("infoBox");
+function toggleInfoBox(button) {
+    const infoBox = document.getElementById(button.dataset.infoBox);
+    const isOpen = button.getAttribute("aria-expanded") === "true";
 
-    box.classList.remove("hidden");
+    if (!isOpen) {
+        infoBox.classList.remove("hidden");
+        button.setAttribute("aria-expanded", "true");
 
-    // Allow the browser to register the display change before fading in
-    setTimeout(() => {
-        box.classList.add("show");
-    }, 20);
+        // Allow the browser to register the display change before fading in
+        requestAnimationFrame(() => {
+            if (button.getAttribute("aria-expanded") === "true") {
+                infoBox.classList.add("show");
+            }
+        });
+    } else {
+        button.setAttribute("aria-expanded", "false");
+
+        if (!infoBox.classList.contains("show")) {
+            infoBox.classList.add("hidden");
+            return;
+        }
+
+        infoBox.classList.remove("show");
+
+        infoBox.addEventListener("transitionend", () => {
+            if (!infoBox.classList.contains("show")) {
+                infoBox.classList.add("hidden");
+            }
+        }, { once: true });
+    }
+}
+
+document.querySelectorAll(".info-toggle").forEach((button) => {
+    button.addEventListener("click", () => toggleInfoBox(button));
 });
 
 const CLOUD_RUN_SERVICE_URL = 'https://todo-derecho-vecino-693380294336.us-south1.run.app/';
