@@ -34,7 +34,7 @@ document.querySelectorAll(".info-toggle").forEach((button) => {
     button.addEventListener("click", () => toggleInfoBox(button));
 });
 
-const CLOUD_RUN_SERVICE_URL = 'https://todo-derecho-vecino-693380294336.us-south1.run.app/';
+const CLOUD_RUN_SERVICE_URL = 'https://tdv-rag-app-693380294336.us-central1.run.app/';
 // const CLOUD_RUN_SERVICE_URL = 'http://localhost:8080'; // For local testing
 
 // Get references to HTML elements
