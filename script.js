@@ -50,104 +50,116 @@ function updateOutputDisplay(data) {
     errorMessage.textContent = '';
     statusMessage.textContent = '';
 
-    if (data && data.processed_output) {
-        const escapeHtml = (text) => text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+    if (!data || !data.processed_output) {
+        outputDisplay.textContent = 'No processed output received.';
+        return;
+    }
 
-        const formatInlineText = (text) => escapeHtml(text)
+    const escapeHtml = (text) => text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+    const formatInlineText = (text) => {
+        // Support escaped Markdown markers: \*\*text\*\*
+        const normalizedText = text.replace(/\\([*_])/g, '$1');
+
+        return escapeHtml(normalizedText)
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    };
 
-        const lines = data.processed_output
-            .replace(/\r\n?/g, '\n')
-            .split('\n');
+    // Convert literal "\n" sequences into real line breaks
+    const normalizedOutput = data.processed_output
+        .replace(/\r\n?/g, '\n')
+        .replace(/\\n/g, '\n');
 
-        const html = [];
-        const paragraphLines = [];
-        const listLevels = [];
+    const lines = normalizedOutput.split('\n');
+    const html = [];
+    const paragraphLines = [];
+    const listLevels = [];
 
-        const closeLists = () => {
-            while (listLevels.length) {
+    const closeLists = () => {
+        while (listLevels.length) {
+            html.push('</li></ul>');
+            listLevels.pop();
+        }
+    };
+
+    const flushParagraph = () => {
+        if (paragraphLines.length) {
+            html.push(
+                `<p>${paragraphLines
+                    .map(formatInlineText)
+                    .join('<br>')}</p>`
+            );
+
+            paragraphLines.length = 0;
+        }
+    };
+
+    lines.forEach((line) => {
+        const bullet = line.match(/^(\s*)\*+\s+(.*)$/);
+
+        if (bullet) {
+            flushParagraph();
+
+            const indentation = bullet[1].length;
+
+            while (
+                listLevels.length &&
+                indentation < listLevels[listLevels.length - 1]
+            ) {
                 html.push('</li></ul>');
                 listLevels.pop();
             }
-        };
 
-        const flushParagraph = () => {
-            if (paragraphLines.length) {
-                html.push(
-                    `<p>${paragraphLines
-                        .map(formatInlineText)
-                        .join('<br>')}</p>`
-                );
-                paragraphLines.length = 0;
-            }
-        };
-
-        lines.forEach((line) => {
-            const bullet = line.match(/^(\s*)\\?\*\s+(.*)$/);
-
-            if (bullet) {
-                flushParagraph();
-
-                const indentation = bullet[1].length;
-
-                while (
-                    listLevels.length &&
-                    indentation < listLevels[listLevels.length - 1]
-                ) {
-                    html.push('</li></ul>');
-                    listLevels.pop();
-                }
-
-                if (
-                    !listLevels.length ||
-                    indentation > listLevels[listLevels.length - 1]
-                ) {
-                    html.push('<ul>');
-                    listLevels.push(indentation);
-                } else {
-                    html.push('</li>');
-                }
-
-                html.push(`<li>${formatInlineText(bullet[2])}`);
-                return;
-            }
-
-            if (!line.trim()) {
-                flushParagraph();
-                closeLists();
-                return;
-            }
-
-            if (listLevels.length) {
-                html.push(`<br>${formatInlineText(line.trim())}`);
+            if (
+                !listLevels.length ||
+                indentation > listLevels[listLevels.length - 1]
+            ) {
+                html.push('<ul>');
+                listLevels.push(indentation);
             } else {
-                paragraphLines.push(line);
+                html.push('</li>');
             }
-        });
 
-        flushParagraph();
-        closeLists();
+            html.push(`<li>${formatInlineText(bullet[2])}`);
+            return;
+        }
 
-        outputDisplay.innerHTML = `
-            <div style="
-                white-space: normal;
-                line-height: 1.6;
-                font-family: Arial, sans-serif;
-                padding: 10px;
-                background-color: #f9f9f9;
-                border-radius: 5px;
-            ">
-                ${html.join('')}
-            </div>
-        `;
-    } else {
-        outputDisplay.textContent = 'No processed output received.';
-    }
+        if (!line.trim()) {
+            flushParagraph();
+            closeLists();
+            return;
+        }
+
+        if (listLevels.length) {
+            html.push(`<br>${formatInlineText(line.trim())}`);
+        } else {
+            paragraphLines.push(line);
+        }
+    });
+
+    flushParagraph();
+    closeLists();
+
+    // Convert any remaining newline characters into HTML line breaks
+    const formattedHtml = html.join('').replace(/\n/g, '<br>');
+
+    outputDisplay.innerHTML = `
+        <div style="
+            white-space: normal;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        ">
+            ${formattedHtml}
+        </div>
+    `;
 }
 
 // Function to show a temporary status message (e.g., loading)
