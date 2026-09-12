@@ -47,13 +47,104 @@ const errorMessage = document.getElementById('errorMessage');
 // Function to update the output display area
 function updateOutputDisplay(data) {
     // Clear previous error messages
-    errorMessage.textContent = ''; 
+    errorMessage.textContent = '';
     statusMessage.textContent = '';
 
     if (data && data.processed_output) {
-        // Format the plain text output nicely as HTML
-        const formattedText = data.processed_output.replace(/\n/g, '<br>');
-        outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">${formattedText}</div>`;
+        const escapeHtml = (text) => text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+        const formatInlineText = (text) => escapeHtml(text)
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+        const lines = data.processed_output
+            .replace(/\r\n?/g, '\n')
+            .split('\n');
+
+        const html = [];
+        const paragraphLines = [];
+        const listLevels = [];
+
+        const closeLists = () => {
+            while (listLevels.length) {
+                html.push('</li></ul>');
+                listLevels.pop();
+            }
+        };
+
+        const flushParagraph = () => {
+            if (paragraphLines.length) {
+                html.push(
+                    `<p>${paragraphLines
+                        .map(formatInlineText)
+                        .join('<br>')}</p>`
+                );
+                paragraphLines.length = 0;
+            }
+        };
+
+        lines.forEach((line) => {
+            const bullet = line.match(/^(\s*)\\?\*\s+(.*)$/);
+
+            if (bullet) {
+                flushParagraph();
+
+                const indentation = bullet[1].length;
+
+                while (
+                    listLevels.length &&
+                    indentation < listLevels[listLevels.length - 1]
+                ) {
+                    html.push('</li></ul>');
+                    listLevels.pop();
+                }
+
+                if (
+                    !listLevels.length ||
+                    indentation > listLevels[listLevels.length - 1]
+                ) {
+                    html.push('<ul>');
+                    listLevels.push(indentation);
+                } else {
+                    html.push('</li>');
+                }
+
+                html.push(`<li>${formatInlineText(bullet[2])}`);
+                return;
+            }
+
+            if (!line.trim()) {
+                flushParagraph();
+                closeLists();
+                return;
+            }
+
+            if (listLevels.length) {
+                html.push(`<br>${formatInlineText(line.trim())}`);
+            } else {
+                paragraphLines.push(line);
+            }
+        });
+
+        flushParagraph();
+        closeLists();
+
+        outputDisplay.innerHTML = `
+            <div style="
+                white-space: normal;
+                line-height: 1.6;
+                font-family: Arial, sans-serif;
+                padding: 10px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+            ">
+                ${html.join('')}
+            </div>
+        `;
     } else {
         outputDisplay.textContent = 'No processed output received.';
     }
