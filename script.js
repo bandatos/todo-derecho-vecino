@@ -47,119 +47,23 @@ const errorMessage = document.getElementById('errorMessage');
 // Function to update the output display area
 function updateOutputDisplay(data) {
     // Clear previous error messages
-    errorMessage.textContent = '';
+    errorMessage.textContent = ''; 
     statusMessage.textContent = '';
 
     if (!data || !data.processed_output) {
         outputDisplay.textContent = 'No processed output received.';
         return;
     }
-
-    const escapeHtml = (text) => text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-
-    const formatInlineText = (text) => {
-        // Support escaped Markdown markers: \*\*text\*\*
-        const normalizedText = text.replace(/\\([*_])/g, '$1');
-
-        return escapeHtml(normalizedText)
-            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    };
-
-    // Convert literal "\n" sequences into real line breaks
-    const normalizedOutput = data.processed_output
-        .replace(/\r\n?/g, '\n')
-        .replace(/\\n/g, '\n');
-
-    const lines = normalizedOutput.split('\n');
-    const html = [];
-    const paragraphLines = [];
-    const listLevels = [];
-
-    const closeLists = () => {
-        while (listLevels.length) {
-            html.push('</li></ul>');
-            listLevels.pop();
-        }
-    };
-
-    const flushParagraph = () => {
-        if (paragraphLines.length) {
-            html.push(
-                `<p>${paragraphLines
-                    .map(formatInlineText)
-                    .join('<br>')}</p>`
-            );
-
-            paragraphLines.length = 0;
-        }
-    };
-
-    lines.forEach((line) => {
-        const bullet = line.match(/^(\s*)\*+\s+(.*)$/);
-
-        if (bullet) {
-            flushParagraph();
-
-            const indentation = bullet[1].length;
-
-            while (
-                listLevels.length &&
-                indentation < listLevels[listLevels.length - 1]
-            ) {
-                html.push('</li></ul>');
-                listLevels.pop();
-            }
-
-            if (
-                !listLevels.length ||
-                indentation > listLevels[listLevels.length - 1]
-            ) {
-                html.push('<ul>');
-                listLevels.push(indentation);
-            } else {
-                html.push('</li>');
-            }
-
-            html.push(`<li>${formatInlineText(bullet[2])}`);
-            return;
-        }
-
-        if (!line.trim()) {
-            flushParagraph();
-            closeLists();
-            return;
-        }
-
-        if (listLevels.length) {
-            html.push(`<br>${formatInlineText(line.trim())}`);
-        } else {
-            paragraphLines.push(line);
-        }
-    });
-
-    flushParagraph();
-    closeLists();
-
-    // Convert any remaining newline characters into HTML line breaks
-    const formattedHtml = html.join('').replace(/\n/g, '<br>');
-
-    outputDisplay.innerHTML = `
-        <div style="
-            white-space: normal;
-            line-height: 1.6;
-            font-family: Arial, sans-serif;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        ">
-            ${formattedHtml}
-        </div>
-    `;
+    // Format the plain text output nicely as HTML
+    const formattedText = data.processed_output.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'" :'&#39;'}[c]))
+        .replace(/\\n\\n/g, '</p><p>')
+        .replace(/\\n/g, '<br>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>')
+        .replace(/^\* (.+)$/gm, '<li>$1</li>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // .replace(/\n/g, '<br>');
+    outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">${formattedText}</div>`;
 }
 
 // Function to show a temporary status message (e.g., loading)
