@@ -63,7 +63,7 @@ function updateOutputDisplay(data) {
         .replace(/^\* (.+)$/gm, '<li>$1</li>')
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     // .replace(/\n/g, '<br>');
-    outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">${formattedText}</div>`;
+    outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px; white-space: initial;">${formattedText}</div>`;
 }
 
 // Function to show a temporary status message (e.g., loading)
