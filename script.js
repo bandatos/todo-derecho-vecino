@@ -47,23 +47,16 @@ const errorMessage = document.getElementById('errorMessage');
 // Function to update the output display area
 function updateOutputDisplay(data) {
     // Clear previous error messages
-    errorMessage.textContent = ''; 
+    errorMessage.textContent = '';
     statusMessage.textContent = '';
 
     if (!data || !data.processed_output) {
         outputDisplay.textContent = 'No processed output received.';
         return;
     }
-    // Format the plain text output nicely as HTML
-    const formattedText = data.processed_output.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'" :'&#39;'}[c]))
-        .replace(/\\n\\n/g, '</p><p>')
-        .replace(/\\n/g, '<br>')
-        .replace(/\n\n/g, '</p><p>')
-        .replace(/\n/g, '<br>')
-        .replace(/^\* (.+)$/gm, '<li>$1</li>')
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // .replace(/\n/g, '<br>');
-    outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px; white-space: initial;">${formattedText}</div>`;
+
+    // The Cloud Run response is already formatted as HTML.
+    outputDisplay.innerHTML = `<div style="line-height: 1.6; font-family: Arial, sans-serif; padding: 10px; background-color: #f9f9f9; border-radius: 5px; white-space: initial;">${data.processed_output}</div>`;
 }
 
 // Function to show a temporary status message (e.g., loading)
